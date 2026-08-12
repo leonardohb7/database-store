@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+/* ---------------------------------------------------------------------------
+   ArteShop Brasil — design tokens
+   Fonte da verdade: Figma orRCcuky3uxh77CSrRRG1j (variáveis "arteShop/*").
+   Os comentários citam o nome da variável no Figma. Não editar sem conferir
+   o design — ver a regra em CLAUDE.md.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* -- Cores base ---------------------------------------------------------- */
+  --color-cream: #fffae8; /* arteShop/Early Dawn — fundo padrão das páginas */
+  --color-linen: #fbf4e6; /* arteShop/Linen — fundo alternativo de seções   */
+  --color-ecru: #f4eee4; /* arteShop/Ecru White — cards e blocos suaves    */
+  --color-bridal: #fffbf4; /* arteShop/Bridal Heath — superfícies claras     */
+  --color-ink: #253541; /* arteShop/Ebony Clay — texto principal          */
+  --color-slate: #5b646f; /* arteShop/Shuttle Gray — texto secundário       */
+  --color-coral: #ab6c6f; /* arteShop/Coral Tree — marca, botões, links     */
+  --color-sage: #a3b18f; /* arteShop/Locust — badge/acento                 */
+  --color-blush: #fbc8d2; /* arteShop/Cupid — badge secundário             */
+  --color-star: #c66f4a; /* estrelas de avaliação                          */
+  --color-border: #ecebe8; /* bordas de card                                */
+  --color-field: #d8d3cd; /* borda de input e checkbox (handoff 40:6511)   */
+  /* Hover dos links do nav. Atenção: este valor NÃO vem das telas — o Figma
+     não tem estado de hover. Foi especificado à mão; #6B5B4E é o "Marrom
+     Médio" do frame Handoff 40:6511, que o CLAUDE.md marca como desatualizado.
+     Trocar por `ink` ou `coral` se a intenção for ficar dentro da paleta. */
+  --color-mocha: #6b5b4e;
+
+  /* Estados de hover: mesma cor escurecida 8% (fator 0.92 por canal). */
+  --color-ink-hover: #22313c;
+  --color-coral-hover: #9d6366;
+
+  /* -- Alphas de ink (arteShop/Ebony Clay N%) ------------------------------ */
+  --color-ink-5: #2535410d;
+  --color-ink-10: #2535411a;
+  --color-ink-15: #25354126;
+  --color-ink-50: #25354180;
+  --color-ink-60: #25354199;
+  --color-ink-70: #253541b2;
+  --color-ink-80: #253541cc;
+
+  /* -- Alphas de cream (arteShop/Early Dawn N%) — usados em scrims/overlays - */
+  --color-cream-10: #fffae81a;
+  --color-cream-20: #fffae833;
+  --color-cream-50: #fffae880;
+  --color-cream-60: #fffae899;
+  --color-cream-85: #fffae8d9;
+  --color-cream-95: #fffae8f2;
+
+  /* -- Alphas de acento ---------------------------------------------------- */
+  --color-sage-30: #a3b18f4d; /* arteShop/Locust 30% */
+  --color-blush-40: #fbc8d266; /* arteShop/Cupid 40%  */
+
+  /* -- Famílias ------------------------------------------------------------ */
+  --font-display: "Playfair Display", ui-serif, Georgia, serif; /* 400 + itálico */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif; /* 400 / 500      */
+
+  /* -- Escala tipográfica (font size/N + line height/N no Figma) ----------- */
+  --text-10: 10px;
+  --text-10--line-height: 15px;
+  --text-11: 11px;
+  --text-11--line-height: 16.5px;
+  --text-12: 12px;
+  --text-12--line-height: 16px;
+  --text-14: 14px;
+  --text-14--line-height: 20px;
+  --text-16: 16px;
+  --text-16--line-height: 26px; /* corpo — presente no design, ver nota */
+  --text-18: 18px;
+  --text-18--line-height: 24.75px;
+  --text-20: 20px;
+  --text-20--line-height: 28px; /* nome do artesão no ArtisanCard (30:3916) */
+  --text-24: 24px;
+  --text-24--line-height: 32px;
+  --text-24--letter-spacing: -0.6px; /* wordmark do header (30:4086)     */
+  --text-30: 30px;
+  --text-30--line-height: 36px;
+  --text-30--letter-spacing: -0.3px; /* wordmark do footer (30:4023)     */
+  --text-48: 48px;
+  --text-48--line-height: 60px;
+  --text-48--letter-spacing: -0.48px; /* arteShop/Playfair Display/Regular */
+  --text-64: 64px;
+  --text-64--line-height: 65.28px;
+  --text-64--letter-spacing: -1.6px; /* hero da Home */
+
+  /* -- Letter-spacing: escala própria, pois varia por uso e não por tamanho - */
+  --tracking-hero: -1.6px;
+  --tracking-display: -0.48px;
+  --tracking-heading: -0.2px;
+  --tracking-title: -0.18px;
+  --tracking-body: -0.16px;
+  --tracking-button: 0.4px; /* letter spacing/0_4 */
+  --tracking-label: 1.98px;
+  --tracking-caps: 2px;
+  --tracking-caps-wide: 2.4px; /* arteShop/Inter/Regular upper */
+  --tracking-caps-xwide: 2.5px; /* "Brasil" no wordmark (30:4088) */
+  --tracking-eyebrow: 3.6px; /* letter spacing/3_6            */
+
+  /* -- Raios (2xl=16px e 3xl=24px são os defaults do Tailwind) ------------- */
+  --radius-button: 8px;
+  --radius-card: 12px; /* handoff 40:6511 — ver nota                     */
+  /* Raio das caixas de imagem dos cards (produto, artesão, categoria). Vem
+     dos nodes reais: 30:3852, 30:3910, 30:3795 — todos `rounded-[30px]`.
+     Não confundir com --radius-card, que veio do frame Handoff. */
+  --radius-media: 30px;
+
+  /* -- Sombras ------------------------------------------------------------- */
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-cta: 0 2px 10px -4px rgba(18, 35, 52, 0.08),
+    0 8px 24px -12px rgba(18, 35, 52, 0.08);
+
+  /* -- Breakpoints: mobile ≤767 · tablet 768–1023 · desktop ≥1024 ---------- */
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+
+  /* -- Layout -------------------------------------------------------------- */
+  /* 1440px + 40px de padding interno: é o que os nodes reais renderizam
+     (footer 30:4019 `div.container-page`). O 1200px/24px que estava aqui vinha
+     do frame "Handoff" 40:6511, marcado como desatualizado no CLAUDE.md. */
+  --container-page: 1440px;
+  --spacing-page-x: 40px;
+  --spacing-gutter: 24px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream text-ink font-sans text-16 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-normal;
+  }
+}
+
+@layer components {
+  /* Container padrão: 1440px máx, 40px de margem lateral. */
+  .container-page {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: var(--spacing-page-x);
+  }
+
+  /* Grid de 12 colunas com gutter de 24px. */
+  .grid-page {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--spacing-gutter);
+  }
+
+  /* Elevação de card no hover — 200ms ease, conforme o handoff. */
+  .card-hover {
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+}
