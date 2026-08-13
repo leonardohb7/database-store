@@ -19,12 +19,14 @@ import Container from '../../components/layout/Container.jsx'
 import ProductGrid from '../../components/product/ProductGrid.jsx'
 import Breadcrumb from '../../components/ui/Breadcrumb.jsx'
 import Button from '../../components/ui/Button.jsx'
+import QuantityStepper from '../../components/ui/QuantityStepper.jsx'
 import Rating from '../../components/ui/Rating.jsx'
 import IconCaminhao from '../../components/ui/icons/IconCaminhao.jsx'
 import IconCompartilhar from '../../components/ui/icons/IconCompartilhar.jsx'
 import IconEscudo from '../../components/ui/icons/IconEscudo.jsx'
 import IconFavoritos from '../../components/ui/icons/IconFavoritos.jsx'
 import IconTroca from '../../components/ui/icons/IconTroca.jsx'
+import { useCart } from '../../context/CartContext.jsx'
 import { getArtisanById } from '../../data/artisans.js'
 import categories from '../../data/categories.js'
 import products, { getProductBySlug } from '../../data/products.js'
@@ -32,7 +34,6 @@ import reviews from '../../data/reviews.js'
 import { formatBRL } from '../../lib/format.js'
 import ArtisanBanner from './ArtisanBanner.jsx'
 import ProductGallery from './ProductGallery.jsx'
-import QuantityStepper from './QuantityStepper.jsx'
 import ReviewCard from './ReviewCard.jsx'
 
 const processo = [
@@ -62,6 +63,7 @@ const botaoRedondo =
 function Produto() {
   const { slug } = useParams()
   const [quantidade, setQuantidade] = useState(1)
+  const { addItem } = useCart()
 
   const product = getProductBySlug(slug)
 
@@ -145,8 +147,18 @@ function Produto() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <QuantityStepper value={quantidade} onChange={setQuantidade} />
 
-            {/* Sem ação por enquanto: o carrinho entra no próximo passo. */}
-            <Button type="button" variant="cta" size="md" className="flex-1">
+            {/* Some a quantidade escolhida e devolve o stepper a 1, para não
+                sugerir que o próximo clique repetiria a mesma soma. */}
+            <Button
+              type="button"
+              variant="cta"
+              size="md"
+              className="flex-1"
+              onClick={() => {
+                addItem(product, quantidade)
+                setQuantidade(1)
+              }}
+            >
               Adicionar à sacola
             </Button>
 

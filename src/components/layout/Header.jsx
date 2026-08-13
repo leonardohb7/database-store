@@ -9,6 +9,7 @@
  */
 
 import { Link, NavLink } from 'react-router-dom'
+import { useCart } from '../../context/CartContext.jsx'
 import Container from './Container.jsx'
 import IconBusca from '../ui/icons/IconBusca.jsx'
 import IconConta from '../ui/icons/IconConta.jsx'
@@ -34,10 +35,9 @@ const acaoClasses =
   'rounded-full p-2.5 text-ink transition-colors duration-200 hover:text-mocha ' +
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral'
 
-/** Fixo em 3 enquanto o CartContext não existe — é o valor do design (30:4112). */
-const itensNaSacola = 3
-
 function Header() {
+  const { itemCount } = useCart()
+
   return (
     <header className="sticky top-0 z-50 border-b border-ink-5 bg-cream-85 backdrop-blur-[6px]">
       <Container className="flex h-20 items-center justify-between">
@@ -71,18 +71,27 @@ function Header() {
             <IconFavoritos />
           </Link>
 
+          {/* O badge conta UNIDADES (`itemCount`), não linhas. O node 30:5324
+              mostra "3" para uma sacola de 3 linhas / 4 unidades — o "3" foi
+              tratado como placeholder, conforme confirmado. Some quando a
+              sacola está vazia, que é o estado inicial. */}
           <Link
             to="/sacola"
-            aria-label={`Sacola, ${itensNaSacola} itens`}
+            aria-label={
+              itemCount === 1 ? 'Sacola, 1 item' : `Sacola, ${itemCount} itens`
+            }
             className={`relative ${acaoClasses}`}
           >
             <IconSacola />
-            <span
-              aria-hidden="true"
-              className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-coral text-10 font-medium text-bridal"
-            >
-              {itensNaSacola}
-            </span>
+
+            {itemCount > 0 && (
+              <span
+                aria-hidden="true"
+                className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-coral text-10 font-medium text-bridal"
+              >
+                {itemCount}
+              </span>
+            )}
           </Link>
         </div>
       </Container>
