@@ -50,10 +50,13 @@
   --color-cream-95: #fffae8f2;
 
   /* -- Alphas de acento ---------------------------------------------------- */
+  --color-sage-15: #a3b18f26; /* cards de estatística do perfil (30:5873) */
   --color-sage-20: #a3b18f33; /* cards de princípios do atelier (30:4967) */
   --color-sage-25: #a3b18f40; /* fundo do bloco do artesão (30:4749) */
   --color-sage-30: #a3b18f4d; /* arteShop/Locust 30% */
+  --color-sage-40: #a3b18f66; /* badge "Entregue" do perfil (30:5912)     */
   --color-blush-40: #fbc8d266; /* arteShop/Cupid 40%  */
+  --color-blush-50: #fbc8d280; /* badge "Em trânsito" do perfil (30:5899) */
 
   /* -- Famílias ------------------------------------------------------------ */
   --font-display: "Playfair Display", ui-serif, Georgia, serif; /* 400 + itálico */
