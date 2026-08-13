@@ -38,6 +38,7 @@
   --color-ink-50: #25354180;
   --color-ink-60: #25354199;
   --color-ink-70: #253541b2;
+  --color-ink-75: #253541bf; /* corpo da tela de produto (30:4677, 30:4762) */
   --color-ink-80: #253541cc;
 
   /* -- Alphas de cream (arteShop/Early Dawn N%) — usados em scrims/overlays - */
@@ -49,6 +50,8 @@
   --color-cream-95: #fffae8f2;
 
   /* -- Alphas de acento ---------------------------------------------------- */
+  --color-sage-20: #a3b18f33; /* cards de princípios do atelier (30:4967) */
+  --color-sage-25: #a3b18f40; /* fundo do bloco do artesão (30:4749) */
   --color-sage-30: #a3b18f4d; /* arteShop/Locust 30% */
   --color-blush-40: #fbc8d266; /* arteShop/Cupid 40%  */
 
@@ -77,6 +80,12 @@
   --text-30: 30px;
   --text-30--line-height: 36px;
   --text-30--letter-spacing: -0.3px; /* wordmark do footer (30:4023)     */
+  --text-36: 36px;
+  /* Título de seção da tela de produto (30:4704, 30:4732). O mesmo tamanho
+     aparece com entrelinha de 40px em 30:4773 e 30:4818 — nesses dois usar
+     `leading-10` por cima. */
+  --text-36--line-height: 45px;
+  --text-36--letter-spacing: -0.36px;
   --text-48: 48px;
   --text-48--line-height: 60px;
   --text-48--letter-spacing: -0.48px; /* arteShop/Playfair Display/Regular */

@@ -236,4 +236,16 @@ const products = [
  *
  * Para inverter, basta mover `badge: 'novo'` e trocar os dois campos de preço.
  */
+const porSlug = new Map(products.map((product) => [product.slug, product]))
+
+/**
+ * Busca uma peça pelo slug da rota /produto/:slug.
+ *
+ * @param {string} slug
+ * @returns {object|undefined}
+ */
+export function getProductBySlug(slug) {
+  return porSlug.get(slug)
+}
+
 export default products

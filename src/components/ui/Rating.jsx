@@ -14,7 +14,7 @@ function Star({ className = '' }) {
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={`size-4 shrink-0 ${className}`}
+      className={`shrink-0 ${className}`}
       aria-hidden="true"
     >
       <path d="M12 2.5l2.95 5.98 6.6.96-4.775 4.654 1.127 6.573L12 17.567l-5.902 3.1 1.127-6.573L2.45 9.44l6.6-.96L12 2.5z" />
@@ -22,9 +22,16 @@ function Star({ className = '' }) {
   )
 }
 
-function Rating({ value = 0, count, className = '', ...props }) {
+/** 14px é o tamanho das estrelas nos cards de avaliação (node 30:4777). */
+const tamanhos = {
+  sm: 'size-3.5',
+  md: 'size-4',
+}
+
+function Rating({ value = 0, count, size = 'md', className = '', ...props }) {
   const limitado = Math.max(0, Math.min(5, value))
   const percentual = (limitado / 5) * 100
+  const estrela = tamanhos[size] ?? tamanhos.md
 
   return (
     <div
@@ -37,7 +44,7 @@ function Rating({ value = 0, count, className = '', ...props }) {
         {/* Trilha vazia */}
         <span className="flex gap-0.5 text-ink-15">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} />
+            <Star key={i} className={estrela} />
           ))}
         </span>
 
@@ -48,7 +55,7 @@ function Rating({ value = 0, count, className = '', ...props }) {
         >
           <span className="flex gap-0.5 text-star">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} />
+              <Star key={i} className={estrela} />
             ))}
           </span>
         </span>

@@ -73,6 +73,17 @@ const artisans = [
 ]
 
 const porId = new Map(artisans.map((artisan) => [artisan.id, artisan]))
+const porSlug = new Map(artisans.map((artisan) => [artisan.slug, artisan]))
+
+/**
+ * Busca um artesão pelo slug da rota /artesao/:slug.
+ *
+ * @param {string} slug
+ * @returns {object|undefined}
+ */
+export function getArtisanBySlug(slug) {
+  return porSlug.get(slug)
+}
 
 /**
  * Busca um artesão pelo id usado em `product.artisanId`.

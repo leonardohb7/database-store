@@ -8,9 +8,16 @@
 
 import { Link } from 'react-router-dom'
 
+/** 36px é o título das seções da tela de artesão (30:4991) e de produto. */
+const titulos = {
+  lg: 'text-48',
+  md: 'text-36 leading-10',
+}
+
 function SectionHeading({
   eyebrow,
   title,
+  size = 'lg',
   linkLabel = 'Ver tudo',
   linkHref,
   className = '',
@@ -29,7 +36,17 @@ function SectionHeading({
             {eyebrow}
           </p>
         )}
-        <h2 className="mt-5 font-display text-48 text-ink">{title}</h2>
+        <h2
+          className={[
+            'font-display text-ink',
+            titulos[size] ?? titulos.lg,
+            eyebrow && 'mt-5',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        >
+          {title}
+        </h2>
       </div>
 
       {linkHref && (
