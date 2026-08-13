@@ -1,9 +1,13 @@
 /**
- * Aside "Seu pedido" — node 30:5489.
+ * Aside do resumo — nodes 30:5489 ("Seu pedido", /checkout) e 30:5693
+ * ("Resumo do pedido", /checkout/confirmacao).
  *
  * Bloco em Locust 20% com radius de 30px (a layer se chama "rounded-2xl", mas
  * o raio aplicado é 30px — o mesmo dos cards), 32px de padding e 20px entre os
  * blocos. Miniatura de 64px em Ecru White com radius 22px.
+ *
+ * Os dois nodes são o mesmo bloco: só mudam o título e a linha "Prazo de
+ * envio", que existe apenas na confirmação — daí as duas props opcionais.
  *
  * PREÇO DA LINHA: o design mostra três peças com quantidade 1, então "R$ 389"
  * é ao mesmo tempo o preço unitário e o da linha. Aqui vale o da LINHA
@@ -24,13 +28,13 @@ function LinhaTotal({ label, children }) {
   )
 }
 
-function OrderSummary({ items, subtotal, frete }) {
+function OrderSummary({ items, subtotal, frete, titulo = 'Seu pedido', prazo }) {
   return (
     /* O design cola o aside em `top-0`; o Header do projeto é sticky e ocupa
        81px, daí o offset — mesmo ajuste do resumo da Sacola. */
     <div className="flex flex-col gap-5 rounded-media bg-sage-20 p-8 desktop:sticky desktop:top-[81px]">
       <h2 className="font-display text-24 tracking-[-0.24px] text-ink">
-        Seu pedido
+        {titulo}
       </h2>
 
       <ul className="divide-y divide-ink-10 pt-1">
@@ -70,6 +74,8 @@ function OrderSummary({ items, subtotal, frete }) {
         <LinhaTotal label="Subtotal">{formatBRL(subtotal)}</LinhaTotal>
 
         <LinhaTotal label="Frete">{rotuloFrete(frete)}</LinhaTotal>
+
+        {prazo && <LinhaTotal label="Prazo de envio">{prazo}</LinhaTotal>}
 
         <div className="flex items-baseline justify-between gap-4 border-t border-ink-10 pt-3">
           <span className="font-display text-18 tracking-title text-ink">

@@ -25,6 +25,27 @@ export function formatBRL(centavos) {
   }).format(centavos / 100)
 }
 
+const MESES = [
+  'jan', 'fev', 'mar', 'abr', 'mai', 'jun',
+  'jul', 'ago', 'set', 'out', 'nov', 'dez',
+]
+
+/**
+ * Data no formato da confirmação de pedido (node 30:5678): "08. mai 2026".
+ * O `Intl` de pt-BR devolve "08 de mai. de 2026", com os "de" e o ponto no
+ * lugar errado, então a montagem é manual. A tela renderiza em caixa alta por
+ * CSS (`uppercase`) — aqui o texto sai como no design, em minúsculas.
+ *
+ * @param {Date|string|number} data
+ * @returns {string}
+ */
+export function formatDataPedido(data) {
+  const d = data instanceof Date ? data : new Date(data)
+  const dia = String(d.getDate()).padStart(2, '0')
+
+  return `${dia}. ${MESES[d.getMonth()]} ${d.getFullYear()}`
+}
+
 /**
  * Percentual de desconto entre o preço cheio e o preço atual.
  * Retorna null quando não há comparação válida.

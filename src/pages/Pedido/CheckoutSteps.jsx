@@ -1,18 +1,24 @@
 /**
- * Stepper de quatro passos do checkout — node 30:5336.
+ * Stepper de quatro passos do checkout — nodes 30:5336 (/checkout) e
+ * 30:5643 (/checkout/confirmacao).
  *
- * O passo atual é fixo em "Entrega": é o que o node mostra (bolinha Ebony Clay
- * com o rótulo em Inter Medium). "Sacola" aparece concluído, em Coral Tree, e
- * "Pagamento" e "Confirmação" apagados, com a bolinha em Ebony Clay 10%.
- * O checkout é uma tela só, então não há navegação entre passos.
+ * O passo atual vem por prop porque as duas telas do fluxo usam o mesmo
+ * stepper: "Entrega" (2) no checkout e "Confirmação" (4) na confirmação.
+ * Concluídos ficam em Coral Tree, o atual com a bolinha Ebony Clay e o rótulo
+ * em Inter Medium, e os pendentes apagados, com a bolinha em Ebony Clay 10%.
+ * Não há navegação entre passos em nenhuma das duas.
+ *
+ * DIVERGÊNCIA em 30:5643: ali as bolinhas 1–3 estão todas em Coral Tree e a 4
+ * em Ebony Clay — o que casa com "passo 4 ativo" e é o que reproduzimos. Mas
+ * os rótulos ficaram inconsistentes no arquivo ("Entrega" ainda em Inter
+ * Medium/ink como se fosse o atual, "Pagamento" em Shuttle Gray como se fosse
+ * pendente). Tratamos isso como resíduo da tela anterior e aplicamos os
+ * estados de forma coerente: 1–3 concluídos, 4 atual.
  */
 
 import IconChevronDireita from '../../components/ui/icons/IconChevronDireita.jsx'
 
 const PASSOS = ['Sacola', 'Entrega', 'Pagamento', 'Confirmação']
-
-/** Índice base 1 do passo atual, como no node. */
-const PASSO_ATUAL = 2
 
 const bolinha = {
   concluido: 'bg-coral text-bridal',
@@ -26,18 +32,19 @@ const rotulo = {
   pendente: 'text-slate',
 }
 
-function estadoDoPasso(numero) {
-  if (numero < PASSO_ATUAL) return 'concluido'
-  if (numero === PASSO_ATUAL) return 'atual'
+function estadoDoPasso(numero, atual) {
+  if (numero < atual) return 'concluido'
+  if (numero === atual) return 'atual'
   return 'pendente'
 }
 
-function CheckoutSteps() {
+/** @param {{atual?: number}} props índice base 1 do passo ativo, como no node. */
+function CheckoutSteps({ atual = 2 }) {
   return (
     <ol className="flex flex-wrap items-center gap-2">
       {PASSOS.map((passo, indice) => {
         const numero = indice + 1
-        const estado = estadoDoPasso(numero)
+        const estado = estadoDoPasso(numero, atual)
 
         return (
           <li

@@ -15,14 +15,14 @@
  */
 
 import { useRef, useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import Container from '../../components/layout/Container.jsx'
 import Button from '../../components/ui/Button.jsx'
-import IconCadeado from '../../components/ui/icons/IconCadeado.jsx'
 import IconCartao from '../../components/ui/icons/IconCartao.jsx'
 import { useCart } from '../../context/CartContext.jsx'
 import { formatBRL } from '../../lib/format.js'
 import CheckoutField from './CheckoutField.jsx'
+import CheckoutHeader from './CheckoutHeader.jsx'
 import CheckoutSteps from './CheckoutSteps.jsx'
 import OrderSummary from './OrderSummary.jsx'
 import ShippingOptions from './ShippingOptions.jsx'
@@ -80,7 +80,8 @@ function Pedido() {
 
   const formRef = useRef(null)
 
-  const frete = MODOS_ENVIO.find((modo) => modo.id === envio).preco
+  const modoEnvio = MODOS_ENVIO.find((modo) => modo.id === envio)
+  const frete = modoEnvio.preco
   const total = subtotal + frete
 
   /* O design não tem checkout de sacola vazia — não há o que revisar nem o que
@@ -138,33 +139,31 @@ function Pedido() {
       return
     }
 
-    const numeroPedido = gerarNumeroPedido()
-
+    /* O `clear` abaixo esvazia o CartContext, então a confirmação não tem como
+       reler a sacola: ela recebe um retrato fechado do pedido pelo state da
+       rota. Os itens vão como estão (produtos do catálogo estático, objetos
+       simples), o que o history do navegador serializa sem problema. */
     setFinalizado(true)
     clear()
     navigate('/checkout/confirmacao', {
-      state: { numeroPedido },
+      state: {
+        numeroPedido: gerarNumeroPedido(),
+        nome: valores.nome.trim(),
+        items,
+        subtotal,
+        frete,
+        prazoEntrega: modoEnvio.prazo,
+        confirmadoEm: new Date().toISOString(),
+      },
       replace: true,
     })
   }
 
   return (
     <Container className="flex flex-col gap-10 py-12">
-      <div className="flex items-center justify-between gap-4">
-        <Link
-          to="/"
-          className="font-display text-24 leading-8 tracking-[-0.24px] text-ink"
-        >
-          ArteShop
-        </Link>
+      <CheckoutHeader />
 
-        <span className="flex items-center gap-2 text-12 text-slate">
-          <IconCadeado className="shrink-0" />
-          Conexão segura
-        </span>
-      </div>
-
-      <CheckoutSteps />
+      <CheckoutSteps atual={2} />
 
       <div className="grid gap-12 desktop:grid-cols-12">
         <form
