@@ -5,10 +5,14 @@
  * que mantém o wordmark do topo alinhado com o do rodapé.
  */
 
-function Container({ as: Component = 'div', className = '', children }) {
+function Container({ as: Component = 'div', className = '', children, ...props }) {
   const classes = ['container-page', className].filter(Boolean).join(' ')
 
-  return <Component className={classes}>{children}</Component>
+  return (
+    <Component className={classes} {...props}>
+      {children}
+    </Component>
+  )
 }
 
 export default Container

@@ -1,5 +1,8 @@
 /**
- * Hero da Home — node 30:3736.
+ * Hero da Home — node 30:3736. Também é o topo do Login (node 30:4117), que
+ * repete a composição inteira — mesmo H1, mesmo parágrafo, mesmo mosaico e a
+ * mesma faixa de selos — trocando só o eyebrow e o par de CTAs. Daí as props
+ * `eyebrow` e `acoes`, que caem nos valores da Home quando omitidas.
  *
  * Grid de 12 colunas com gutter de 56px (não é o `grid-page`, que usa 24px):
  * texto nas colunas 1–5, mosaico de imagens nas 6–12, ambos alinhados pela
@@ -47,6 +50,23 @@ const mosaico = [
   },
 ]
 
+/**
+ * Eyebrow e CTAs da Home (30:3739, 30:3745). O Login passa os seus.
+ * Cada ação vira um `Button`: `variant` e `label` são consumidos, o resto é
+ * repassado — assim a ação pode ser um `Link` do router ou uma âncora comum.
+ */
+const EYEBROW_HOME = 'Coleção outono · 2026'
+
+const ACOES_HOME = [
+  { label: 'Explorar coleção', variant: 'cta', as: Link, to: '/loja' },
+  {
+    label: 'Conheça os artesãos',
+    variant: 'ctaSecondary',
+    as: Link,
+    to: '/artesaos',
+  },
+]
+
 const selos = [
   {
     Icon: IconMao,
@@ -67,13 +87,13 @@ const selos = [
   },
 ]
 
-function Hero() {
+function Hero({ eyebrow = EYEBROW_HOME, acoes = ACOES_HOME }) {
   return (
     <Container className="flex flex-col gap-20 pt-16">
       <div className="grid gap-14 desktop:h-[620px] desktop:grid-cols-12">
         <div className="flex flex-col gap-6 desktop:col-span-5 desktop:self-end">
           <p className="font-sans text-12 uppercase tracking-eyebrow text-slate">
-            Coleção outono · 2026
+            {eyebrow}
           </p>
 
           <h1 className="font-display text-64 text-ink">
@@ -88,12 +108,11 @@ function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-3 pt-3">
-            <Button as={Link} to="/loja" variant="cta">
-              Explorar coleção
-            </Button>
-            <Button as={Link} to="/artesaos" variant="ctaSecondary">
-              Conheça os artesãos
-            </Button>
+            {acoes.map(({ label, variant, ...props }) => (
+              <Button key={label} variant={variant} {...props}>
+                {label}
+              </Button>
+            ))}
           </div>
         </div>
 

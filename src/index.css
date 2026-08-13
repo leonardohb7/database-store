@@ -16,6 +16,11 @@
   --color-ink: #253541; /* arteShop/Ebony Clay — texto principal          */
   --color-slate: #5b646f; /* arteShop/Shuttle Gray — texto secundário       */
   --color-coral: #ab6c6f; /* arteShop/Coral Tree — marca, botões, links     */
+  --color-cod: #1b1b1b; /* arteShop/Cod Gray — rótulos do login (30:4169)  */
+  /* Fundo do botão "Criar conta" do login (30:4173). Chega no design context
+     como primitivo `color/cyan/34`, sem nome semântico em arteShop/* — é a
+     única cor da paleta que só aparece nessa tela. */
+  --color-teal: #41626a;
   --color-sage: #a3b18f; /* arteShop/Locust — badge/acento                 */
   --color-blush: #fbc8d2; /* arteShop/Cupid — badge secundário             */
   --color-star: #c66f4a; /* estrelas de avaliação                          */
